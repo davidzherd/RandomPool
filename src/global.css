@@ -1,0 +1,18 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+}
+html{
+    background-color: #333;
+}
+@media (max-width: 700px){
+    .startBtn{
+        position: relative;
+        bottom: 0;
+        
+    }
+}
