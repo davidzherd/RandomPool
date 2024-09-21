@@ -18,7 +18,7 @@ const LogoStyled = styled.div`
 export const Logo = ()=>{
     return (
         <LogoStyled>
-            {<svg className="shadow" height="auto" width="60%" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" 
+            {<svg className="shadow" width="60%" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" 
 	 viewBox="0 0 297 297">
 <g>
 	<g>
