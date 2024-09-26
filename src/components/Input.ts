@@ -16,7 +16,7 @@ export const Input = styled.input<Props>`
     height: 2rem;
     padding: 0.3rem;
     color: ${(props)=>props.color ?? "black"};
-    text-shadow: ${(props)=>props.shadowcolor + " 2px 2px 3px" ?? "none"};
+    text-shadow: ${(props)=>props.shadowcolor + " 2px 2px 3px"};
 `;
 export const DropdownButton = styled.div`
     width: 3rem;

@@ -6,36 +6,39 @@ import { Input } from '../components/Input';
 import { Logo } from '../components/Logo';
 import { Text } from '../components/Text';
 import { StartButton } from '../components/Button';
+import { distributeBalls, User } from '../logic';
 
-interface Player {
-  name: string;
-  password: string;
+interface Props{
+  updatePlayers: Function;
 }
-
-function GameSettings() {
+function GameSettings({ updatePlayers }:Props) {
   const [numOfPlayers, setNumOfPlayers] = useState<number>(2);
   const [numOfBalls, setNumOfBalls] = useState<number>(1);
+  
 
   const submitDetails = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const players = createPlayers(e.currentTarget.elements);
-    console.log(players);
+    updatePlayers(players)
   };
 
   function createPlayers(target: HTMLFormControlsCollection) {
-    const players: Player[] = [];
+    let players: User[] = [];
 
     for (let i = 0; i < target.length - 1; i += 2) {
       const playerName = (target[i] as HTMLInputElement).value;
       const playerPassword = (target[i + 1] as HTMLInputElement).value;
 
-      const player: Player = {
+      const player: User = {
+        id: i,
         name: playerName,
         password: playerPassword,
+        balls: []
       };
 
       players.push(player);
     }
+    players = distributeBalls(players, numOfBalls)
 
     return players;
   }
