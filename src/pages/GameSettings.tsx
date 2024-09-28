@@ -7,6 +7,7 @@ import { Logo } from '../components/Logo';
 import { Text } from '../components/Text';
 import { StartButton } from '../components/Button';
 import { distributeBalls, User } from '../logic';
+import { Navigate } from 'react-router-dom';
 
 interface Props{
   updatePlayers: Function;
@@ -14,12 +15,13 @@ interface Props{
 function GameSettings({ updatePlayers }:Props) {
   const [numOfPlayers, setNumOfPlayers] = useState<number>(2);
   const [numOfBalls, setNumOfBalls] = useState<number>(1);
-  
+  const [settingSaved, setSettingSaved] = useState(false);
 
   const submitDetails = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const players = createPlayers(e.currentTarget.elements);
     updatePlayers(players)
+    setSettingSaved(true);
   };
 
   function createPlayers(target: HTMLFormControlsCollection) {
@@ -33,7 +35,8 @@ function GameSettings({ updatePlayers }:Props) {
         id: i,
         name: playerName,
         password: playerPassword,
-        balls: []
+        balls: [],
+        tag: (playerName.charAt(0)+playerName.charAt(playerName.length-1)).toUpperCase()
       };
 
       players.push(player);
@@ -46,6 +49,7 @@ function GameSettings({ updatePlayers }:Props) {
 
   return (
     <>
+    {settingSaved && <Navigate to={'/game'}/>}
       <form onSubmit={submitDetails}>
         <Center direction='column'>
           <Logo />
@@ -78,7 +82,7 @@ function GameSettings({ updatePlayers }:Props) {
               </div>
             ))}
           </Card>
-          <StartButton btncolor='#ed428e' fill={false} txtcolor='#ed428e' size={2}>
+          <StartButton type='submit' btncolor='#ed428e' fill={false} txtcolor='#ed428e' size={2}>
             START GAME
           </StartButton>
         </Center>

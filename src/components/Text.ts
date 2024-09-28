@@ -13,6 +13,6 @@ export const Text = styled.p<Props>`
     font-weight: ${(props)=>props.weight?? "400"};
     color: ${(props)=>props.color || "white"};
     text-shadow: ${props => props.shadowcolor + " 1px 1px 4px"};
-    margin: ${props => props.margin ?? "none"};
-    padding: ${props => props.padding ?? "none"};
+    margin: ${props => props.margin ?? "0"};
+    padding: ${props => props.padding ?? "0"};
 `;

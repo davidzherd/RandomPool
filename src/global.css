@@ -23,3 +23,12 @@ a{
     justify-content: center;
     text-decoration: none;
 }
+.ballShadow{
+    -webkit-filter: drop-shadow( 1px 3px 3px black);
+		filter: drop-shadow( 1px 3px 3px black);
+}
+.header{
+    width: 100%;
+    box-shadow: 0 5px 15px rgb(28, 28, 28);
+    padding-bottom: 1rem;
+}

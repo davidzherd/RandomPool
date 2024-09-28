@@ -1,8 +1,11 @@
+
 export type User = {
     id: number;
     name: string;
     password: string;
     balls: number[];
+    tag: string;
+    color: string;
 };
 
 export function distributeBalls(users: User[], ballsPerUser: number): User[] {
@@ -13,6 +16,7 @@ export function distributeBalls(users: User[], ballsPerUser: number): User[] {
     for (const user of users) {
         // Ensure we don't exceed the available balls
         user.balls = shuffledBalls.slice(index, index + ballsPerUser);
+        user.color = randomColor();
         result.push(user)
         // console.log(user)
         index += ballsPerUser;
@@ -28,4 +32,13 @@ function shuffleArray(array: number[]): number[] {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+}
+export function randomColor(){
+    let rgb = [0,0,0];
+    for (let i = 0; i < rgb.length; i++) {
+        rgb[i] = Math.floor(Math.random() * 256);
+    }
+    const baseColor = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
+    console.log(baseColor)
+    return baseColor;
 }
