@@ -6,7 +6,7 @@ import { Input } from '../components/Input';
 import { Logo } from '../components/Logo';
 import { Text } from '../components/Text';
 import { StartButton } from '../components/Button';
-import { distributeBalls, User } from '../logic';
+import { distributeBalls, formValidation, User } from '../logic';
 import { Navigate } from 'react-router-dom';
 
 interface Props{
@@ -16,12 +16,18 @@ function GameSettings({ updatePlayers }:Props) {
   const [numOfPlayers, setNumOfPlayers] = useState<number>(2);
   const [numOfBalls, setNumOfBalls] = useState<number>(1);
   const [settingSaved, setSettingSaved] = useState(false);
+  const [validForm, setValidForm] = useState(true);
 
   const submitDetails = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const players = createPlayers(e.currentTarget.elements);
-    updatePlayers(players)
-    setSettingSaved(true);
+    const valid = formValidation(e.currentTarget.elements);
+    if (valid){
+      const players = createPlayers(e.currentTarget.elements);
+      updatePlayers(players)
+      setSettingSaved(true);
+    }else{
+      setValidForm(false);
+    }
   };
 
   function createPlayers(target: HTMLFormControlsCollection) {
@@ -36,7 +42,8 @@ function GameSettings({ updatePlayers }:Props) {
         name: playerName,
         password: playerPassword,
         balls: [],
-        tag: (playerName.charAt(0)+playerName.charAt(playerName.length-1)).toUpperCase()
+        tag: (playerName.charAt(0) + playerName.charAt(playerName.length - 1)).toUpperCase(),
+        color: ''
       };
 
       players.push(player);
@@ -82,6 +89,7 @@ function GameSettings({ updatePlayers }:Props) {
               </div>
             ))}
           </Card>
+          {!validForm && <Text style={{color: "red"}}>All fields must be filled.</Text>}
           <StartButton type='submit' btncolor='#ed428e' fill={false} txtcolor='#ed428e' size={2}>
             START GAME
           </StartButton>

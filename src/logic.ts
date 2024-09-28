@@ -39,6 +39,15 @@ export function randomColor(){
         rgb[i] = Math.floor(Math.random() * 256);
     }
     const baseColor = `rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;
-    console.log(baseColor)
     return baseColor;
+}
+export function formValidation(formData: HTMLFormControlsCollection){
+    for (let i = 0; i < formData.length - 1; i += 2) {
+        const playerName = (formData[i] as HTMLInputElement).value;
+        const playerPassword = (formData[i + 1] as HTMLInputElement).value;
+        if (playerName === "" || playerPassword === ""){
+            return false;
+        }
+    }
+    return true;
 }

@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Game from './pages/Game';
 import { User } from './logic';
+
 interface Context{
   playersData: User[] | [];
   updatePlayersData: Function;

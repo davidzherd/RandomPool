@@ -64,7 +64,7 @@ export const PopUp = ({display, bottom, action}:Props) =>{
                 <Input width="80%" type="password" onChange={(e)=>setPassword(e.target.value)} value={password}/>
                 <Button txtcolor="#ed428e" btncolor="#ed428e" size={1.5} onClick={verifyUserPassword}>SHOW</Button>
                 <Text size={1.5} weight="500">Your balls are:</Text>
-                {balls.length != 0 && balls.map(ball=><Ball key={ball+"ball"} ballNumber = {ball} ballSize={100}/>)}
+                {balls.length != 0 && balls.map(ball=><Ball txtSize="2rem" key={ball+"ball"} ballNumber = {ball} ballSize={100}/>)}
                 {error&& <Text style={{color:"red"}}>{error}</Text>}
             </div>
         </StyledPopUp>

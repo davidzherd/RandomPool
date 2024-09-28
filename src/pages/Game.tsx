@@ -14,7 +14,21 @@ const Game = ()=> {
     const handleBallPot = (identifier:number)=>{
       const leftOverBalls = availableBalls.filter(ball=> ball !== identifier)
       setAvailableBalls(leftOverBalls)
+      removeBallFromUser(playerCtx.playersData, identifier)
     }
+
+    function removeBallFromUser(playersData: User[], ballNumber: number): boolean {
+      for (const player of playersData) {
+          const ballIndex = player.balls.indexOf(ballNumber);
+          if (ballIndex !== -1) {
+              player.balls.splice(ballIndex, 1);
+              player.balls.length === 0 && playersData.splice(playersData.indexOf(player),1)
+              playerCtx.updatePlayersData(playersData)
+          }
+      }
+      return false;
+    }
+
     const [displayPopUp, setDisplayPopUp] = useState({display: "none", bottom: -1000})
     const handlePopUp = ()=>{
         if (displayPopUp.display === "none"){
@@ -33,7 +47,7 @@ const Game = ()=> {
             Players
           </Text>
           <Center direction="row">
-          {playerCtx.playersData.length > 0 && playerCtx.playersData.map((player: User,index)=> <Center direction="column" key={index+"user"}><PlayerTag background={player.color} onClick={handlePopUp}><div style={{width:"25px", height:"25px", background:"white", borderRadius:"50%", display:"flex", justifyContent:"center", alignItems:"center", fontWeight:"500"
+          {playerCtx.playersData.length > 0 && playerCtx.playersData.map((player: User,index)=><Center direction="column" key={index+"user"}><PlayerTag background={player.color} onClick={handlePopUp}><div style={{width:"25px", height:"25px", background:"white", borderRadius:"50%", display:"flex", justifyContent:"center", alignItems:"center", fontWeight:"500"
           }}>{player.tag}</div></PlayerTag><Text weight="300" size={0.8}>{player.name.toUpperCase()}</Text></Center>)}
           </Center>
           </Center>
@@ -41,7 +55,7 @@ const Game = ()=> {
             Available balls on the table
           </Text>
           <div style={{display:"grid", gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr", gap: "0.5rem"}}>
-          {availableBalls.length != 0 && availableBalls.map(ball=><Ball action={()=>handleBallPot(ball)} key={ball+"ball"} ballNumber = {ball} ballSize={50}/>)}
+          {availableBalls.length != 0 && availableBalls.map(ball=><Ball txtSize="1rem" action={()=>handleBallPot(ball)} key={ball+"ball"} ballNumber = {ball} ballSize={50}/>)}
           </div>
           <Text size={1} weight="500" margin="1rem" shadowcolor="#151515">Click on a ball to eliminate it!</Text>
     </Center>

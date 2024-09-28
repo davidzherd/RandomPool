@@ -3,8 +3,9 @@ interface Props{
   ballNumber: number;
   ballSize: number;
   action?: ActionType;
+  txtSize: string;
 }
-export const Ball = ({ ballNumber, ballSize, action }:Props) =>{
+export const Ball = ({ ballNumber, ballSize, action,txtSize }:Props) =>{
   const ballColor = ()=>{
     switch(ballNumber){
       case 1:
@@ -44,7 +45,7 @@ export const Ball = ({ ballNumber, ballSize, action }:Props) =>{
   if (ballNumber < 8){
     return(
       <div onClick={action} className="ballShadow" style={{background: `${color}`, width:`${ballSize+"px"}`, height: `${ballSize+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", margin:"0.25rem"}}>
-        <div style={{background: `white`, width:`${ballSize/2+"px"}`, height: `${ballSize/2+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", fontWeight: "500"}}>
+        <div style={{fontSize:`${txtSize}`, background: `white`, width:`${ballSize/2+"px"}`, height: `${ballSize/2+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", fontWeight: "500"}}>
           {ballNumber}
         </div>
       </div>
@@ -52,7 +53,7 @@ export const Ball = ({ ballNumber, ballSize, action }:Props) =>{
   }else if(ballNumber === 8){
     return(
       <div onClick={action} className="ballShadow" style={{background: `${color}`, width:`${ballSize+"px"}`, height: `${ballSize+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", margin:"0.25rem"}}>
-        <div style={{background: `white`, width:`${ballSize/2+"px"}`, height: `${ballSize/2+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", fontWeight: "500"}}>
+        <div style={{fontSize:`${txtSize}`, background: `white`, width:`${ballSize/2+"px"}`, height: `${ballSize/2+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", fontWeight: "500"}}>
           {ballNumber}
         </div>
       </div>
@@ -61,7 +62,7 @@ export const Ball = ({ ballNumber, ballSize, action }:Props) =>{
     return(
       <div onClick={action} className="ballShadow" style={{background: "white", width:`${ballSize+"px"}`, height: `${ballSize+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", margin:"0.25rem"}}>
         <div style={{background: `${color}`, width:`${ballSize+"px"}`, height: `${ballSize*0.60 +"px"}`, borderRadius: "27%", display:"flex", alignItems:"center", justifyContent: "center", overflow:"hidden"}}>
-          <div style={{background: `white`, width:`${ballSize/2+"px"}`, height: `${ballSize/2+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", fontWeight: "500"}}>
+          <div style={{fontSize:`${txtSize}`, background: `white`, width:`${ballSize/2+"px"}`, height: `${ballSize/2+"px"}`, borderRadius: "50%", display:"flex", alignItems:"center", justifyContent: "center", fontWeight: "500"}}>
             {ballNumber}
           </div>
         </div>
