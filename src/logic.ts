@@ -18,7 +18,6 @@ export function distributeBalls(users: User[], ballsPerUser: number): User[] {
         user.balls = shuffledBalls.slice(index, index + ballsPerUser);
         user.color = randomColor();
         result.push(user)
-        // console.log(user)
         index += ballsPerUser;
     }
 
@@ -51,3 +50,26 @@ export function formValidation(formData: HTMLFormControlsCollection){
     }
     return true;
 }
+
+export function createPlayers(target: HTMLFormControlsCollection, numOfBalls:number) {
+    let players: User[] = [];
+
+    for (let i = 0; i < target.length - 1; i += 2) {
+      const playerName = (target[i] as HTMLInputElement).value;
+      const playerPassword = (target[i + 1] as HTMLInputElement).value;
+
+      const player: User = {
+        id: i,
+        name: playerName,
+        password: playerPassword,
+        balls: [],
+        tag: (playerName.charAt(0) + playerName.charAt(playerName.length - 1)).toUpperCase(),
+        color: ''
+      };
+
+      players.push(player);
+    }
+    players = distributeBalls(players, numOfBalls)
+
+    return players;
+  }

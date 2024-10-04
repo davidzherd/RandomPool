@@ -6,7 +6,7 @@ import { Input } from '../components/Input';
 import { Logo } from '../components/Logo';
 import { Text } from '../components/Text';
 import { StartButton } from '../components/Button';
-import { distributeBalls, formValidation, User } from '../logic';
+import { createPlayers, formValidation } from '../logic';
 import { Navigate } from 'react-router-dom';
 
 interface Props{
@@ -22,37 +22,13 @@ function GameSettings({ updatePlayers }:Props) {
     e.preventDefault();
     const valid = formValidation(e.currentTarget.elements);
     if (valid){
-      const players = createPlayers(e.currentTarget.elements);
+      const players = createPlayers(e.currentTarget.elements, numOfBalls);
       updatePlayers(players)
       setSettingSaved(true);
     }else{
       setValidForm(false);
     }
   };
-
-  function createPlayers(target: HTMLFormControlsCollection) {
-    let players: User[] = [];
-
-    for (let i = 0; i < target.length - 1; i += 2) {
-      const playerName = (target[i] as HTMLInputElement).value;
-      const playerPassword = (target[i + 1] as HTMLInputElement).value;
-
-      const player: User = {
-        id: i,
-        name: playerName,
-        password: playerPassword,
-        balls: [],
-        tag: (playerName.charAt(0) + playerName.charAt(playerName.length - 1)).toUpperCase(),
-        color: ''
-      };
-
-      players.push(player);
-    }
-    players = distributeBalls(players, numOfBalls)
-
-    return players;
-  }
-
 
   return (
     <>

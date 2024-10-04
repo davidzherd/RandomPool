@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react"
+import { useContext, useState } from "react"
 import { Center } from "../components/Center"
 import { Text } from "../components/Text"
 import { PlayersContext } from "../App"
@@ -6,40 +6,46 @@ import { PlayerTag } from "../components/PlayerTag"
 import { User } from "../logic"
 import { Ball } from "../components/Ball"
 import { PopUp } from "../components/PopUp"
+import { Card } from "../components/Card"
+import { Log } from "../components/Log"
 
 const Game = ()=> {
-    const playerCtx = useContext(PlayersContext)
-    const [availableBalls,setAvailableBalls] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+  const playerCtx = useContext(PlayersContext)
+  const [availableBalls,setAvailableBalls] = useState([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15])
+  const [pottedBalls, setPottedBalls] = useState<string[]>([])
+  const [displayPopUp, setDisplayPopUp] = useState(-1000)
+  const [selectedPlayer, setSelectedPlayer] = useState(0)
+console.log(pottedBalls)
+  const handleBallPot = (identifier:number)=>{
+    const leftOverBalls = availableBalls.filter(ball=> ball !== identifier)
+    setAvailableBalls(leftOverBalls)
+    setPottedBalls((potted)=>[...potted, `Ball number ${identifier} potted!`])
+    removeBallFromUser(playerCtx.playersData, identifier)
+  }
 
-    const handleBallPot = (identifier:number)=>{
-      const leftOverBalls = availableBalls.filter(ball=> ball !== identifier)
-      setAvailableBalls(leftOverBalls)
-      removeBallFromUser(playerCtx.playersData, identifier)
-    }
-
-    function removeBallFromUser(playersData: User[], ballNumber: number): boolean {
-      for (const player of playersData) {
-          const ballIndex = player.balls.indexOf(ballNumber);
-          if (ballIndex !== -1) {
-              player.balls.splice(ballIndex, 1);
-              player.balls.length === 0 && playersData.splice(playersData.indexOf(player),1)
-              playerCtx.updatePlayersData(playersData)
-          }
-      }
-      return false;
-    }
-
-    const [displayPopUp, setDisplayPopUp] = useState(-1000)
-    const [selectedPlayer, setSelectedPlayer] = useState(0)
-
-    const handlePopUp = (playerId:number)=>{
-      setSelectedPlayer(playerId)
-        if (displayPopUp === -1000){
-            setDisplayPopUp(0)
-        }else{
-            setDisplayPopUp(-1000)
+  function removeBallFromUser(playersData: User[], ballNumber: number): boolean {
+    for (const player of playersData) {
+        const ballIndex = player.balls.indexOf(ballNumber);
+        if (ballIndex !== -1) {
+            player.balls.splice(ballIndex, 1);
+            if(player.balls.length === 0){
+              playersData.splice(playersData.indexOf(player),1)
+              setPottedBalls((potted)=>[...potted, `${player.name} was eliminated!`])
+            }
+            playerCtx.updatePlayersData(playersData)
         }
     }
+    return false;
+  }
+
+  const handlePopUp = (playerId:number)=>{
+    setSelectedPlayer(playerId)
+      if (displayPopUp === -1000){
+          setDisplayPopUp(0)
+      }else{
+          setDisplayPopUp(-1000)
+      }
+  }
 
   return (
     <div style={{overflow:"hidden"}}>
@@ -61,6 +67,10 @@ const Game = ()=> {
           {availableBalls.length != 0 && availableBalls.map(ball=><Ball txtSize="1rem" action={()=>handleBallPot(ball)} key={ball+"ball"} ballNumber = {ball} ballSize={50}/>)}
           </div>
           <Text size={1} weight="500" margin="1rem" shadowcolor="#151515">Click on a ball to eliminate it!</Text>
+          <Card width="90%" height={(window.innerHeight * 0.3).toString()+"px"} margin="1rem" padding="1rem">
+            <Log ballsArray={[...pottedBalls].reverse()} height={(window.innerHeight * 0.25).toString()+"px"} width={(window.innerWidth * 0.8).toString()+"px"}>
+            </Log>
+          </Card>
     </Center>
     </div>
   )
