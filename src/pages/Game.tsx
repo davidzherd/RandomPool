@@ -1,4 +1,4 @@
-import { useContext, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { Center } from "../components/Center"
 import { Text } from "../components/Text"
 import { PlayersContext } from "../App"
@@ -29,25 +29,28 @@ const Game = ()=> {
       return false;
     }
 
-    const [displayPopUp, setDisplayPopUp] = useState({display: "none", bottom: -1000})
-    const handlePopUp = ()=>{
-        if (displayPopUp.display === "none"){
-            setDisplayPopUp({display: "flex", bottom: 0})
+    const [displayPopUp, setDisplayPopUp] = useState(-1000)
+    const [selectedPlayer, setSelectedPlayer] = useState(0)
+
+    const handlePopUp = (playerId:number)=>{
+      setSelectedPlayer(playerId)
+        if (displayPopUp === -1000){
+            setDisplayPopUp(0)
         }else{
-            setDisplayPopUp({display: "none", bottom: -1000})
+            setDisplayPopUp(-1000)
         }
     }
 
   return (
-    <>
-    <PopUp display={displayPopUp.display} bottom={displayPopUp.bottom} action={handlePopUp}/>
+    <div style={{overflow:"hidden"}}>
+    <PopUp bottom={displayPopUp} action={()=>handlePopUp(selectedPlayer)} selectedPlayer={selectedPlayer}/>
     <Center direction='column'>
       <Center background="#474747" direction="column" className="header">
           <Text shadowcolor="#ed428e" size={2} weight="400" margin="1rem">
             Players
           </Text>
           <Center direction="row">
-          {playerCtx.playersData.length > 0 && playerCtx.playersData.map((player: User,index)=><Center direction="column" key={index+"user"}><PlayerTag background={player.color} onClick={handlePopUp}><div style={{width:"25px", height:"25px", background:"white", borderRadius:"50%", display:"flex", justifyContent:"center", alignItems:"center", fontWeight:"500"
+          {playerCtx.playersData.length > 0 && playerCtx.playersData.map((player: User,index)=><Center direction="column" key={index+"user"}><PlayerTag background={player.color} onClick={()=>handlePopUp(player.id)}><div style={{width:"25px", height:"25px", background:"white", borderRadius:"50%", display:"flex", justifyContent:"center", alignItems:"center", fontWeight:"500"
           }}>{player.tag}</div></PlayerTag><Text weight="300" size={0.8}>{player.name.toUpperCase()}</Text></Center>)}
           </Center>
           </Center>
@@ -59,7 +62,7 @@ const Game = ()=> {
           </div>
           <Text size={1} weight="500" margin="1rem" shadowcolor="#151515">Click on a ball to eliminate it!</Text>
     </Center>
-    </>
+    </div>
   )
 }
 

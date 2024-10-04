@@ -8,29 +8,33 @@ import { Button } from "./Button";
 import { PlayersContext } from "../App";
 
 interface Props{
-    display: string;
     bottom: number;
     action: ActionType;
+    selectedPlayer: number;
 }
-const StyledPopUp = styled.div<{display:string, bottom:number}>`
-width: 100%;
-height: 100%;
+const StyledPopUp = styled.div<{ bottom:number}>`
+width: ${props=> props.bottom === 0 ? "100%" : "0"};
+height: ${props=> props.bottom === 0 ? "100%" : "0"};
 background: #333;
-display: ${props=>props.display};
+display: flex;
 position: absolute;
 bottom: ${props=> props.bottom}px;
-transition: ease-in 1s all;
+transition: ease-in 0.2s bottom;
 z-index: 100;
+overflow:hidden;
 .wrapper{
-    display: flex;
+    display: ${props=> props.bottom === 0 ? "flex" : "none"};
     flex-direction: column;
     width: 100%;
     padding: 1rem;
     gap: 1rem;
     align-items: center;
+    transition: ease-in 0.2s;
+    overflow: hidden;
 }
 `;
-export const PopUp = ({display, bottom, action}:Props) =>{
+
+export const PopUp = ({ bottom, action, selectedPlayer}:Props) =>{
     const userCtx = useContext(PlayersContext)
     const [password, setPassword] = useState("")
     const [balls, setBalls] = useState<number[]>([])
@@ -38,7 +42,7 @@ export const PopUp = ({display, bottom, action}:Props) =>{
 
     const verifyUserPassword = ()=>{
         for (let i = 0; i < userCtx.playersData.length; i++) {
-           if (userCtx.playersData[i].password === password){
+           if (userCtx.playersData[i].id === selectedPlayer && userCtx.playersData[i].password === password){
             showBalls(userCtx.playersData[i].balls)
             return
            }else{
@@ -57,7 +61,7 @@ export const PopUp = ({display, bottom, action}:Props) =>{
         action()
     }
     return(
-        <StyledPopUp display={display} bottom={bottom}>
+        <StyledPopUp bottom={bottom}>
             <div className="wrapper">
                 <IoClose size={40} color="white" style={{alignSelf:"end"}} onClick={close}/>
                 <Text size={1.5} weight="500">Enter your password:</Text>
