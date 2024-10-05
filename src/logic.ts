@@ -16,7 +16,9 @@ export function distributeBalls(users: User[], ballsPerUser: number): User[] {
     for (const user of users) {
         // Ensure we don't exceed the available balls
         user.balls = shuffledBalls.slice(index, index + ballsPerUser);
-        user.color = randomColor();
+        if (user.color === "") {
+            user.color = randomColor()
+        } 
         result.push(user)
         index += ballsPerUser;
     }

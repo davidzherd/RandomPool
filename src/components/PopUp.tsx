@@ -12,7 +12,7 @@ interface Props{
     action: ActionType;
     selectedPlayer: number;
 }
-const StyledPopUp = styled.div<{ bottom:number}>`
+export const StyledPopUp = styled.div<{ bottom:number}>`
 width: ${props=> props.bottom === 0 ? "100%" : "0"};
 height: ${props=> props.bottom === 0 ? "100%" : "0"};
 background: #333;

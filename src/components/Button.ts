@@ -5,10 +5,10 @@ interface Props{
     txtcolor?: string;
     btncolor?: string;
     fill?: boolean;
+    margin?: string;
+    padding?:string;
 }
 const shareStyle = css`
-    margin: 1rem;
-    padding: 0.5rem 1rem;
     font-weight: 700;
     transition: all 0.3s;
     &:hover{
@@ -17,6 +17,8 @@ const shareStyle = css`
 `;
 export const Button = styled.button<Props>`
     ${shareStyle}
+    margin: ${(props)=>props.margin ?? "1rem"};
+    padding: ${(props)=>props.padding ?? "0.5rem 1rem"};
     font-size: ${(props)=>props.size + "rem" || "1rem"};
     color: ${(props)=>props.txtcolor || "white"};
     background: ${(props)=>props.fill? props.btncolor : "transparent"};
@@ -29,6 +31,8 @@ export const Button = styled.button<Props>`
 `;
 export const StartButton = styled.button<Props>`
 ${shareStyle}
+margin: ${(props)=>props.margin ?? "1rem"};
+padding: ${(props)=>props.padding ?? "0.5rem 1rem"};
 font-size: ${(props)=>props.size + "rem" || "1rem"};
     color: ${(props)=>props.txtcolor || "white"};
     background: ${(props)=>props.fill? props.btncolor : "transparent"};

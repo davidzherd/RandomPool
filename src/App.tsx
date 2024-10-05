@@ -9,23 +9,32 @@ import { User } from './logic';
 interface Context{
   playersData: User[] | [];
   updatePlayersData: Function;
+  initialPlayersData: Settings;
+  updateInitialPlayersData:Function;
 }
-export const PlayersContext = createContext<Context>({playersData:[], updatePlayersData:(_e: [])=>{}});
+interface Settings{
+  players: User[] | [];
+  balls: number;
+}
+export const PlayersContext = createContext<Context>({playersData:[], updatePlayersData:(_e: [])=>{}, initialPlayersData: {players:[], balls:0}, updateInitialPlayersData:(_e: [])=>{}});
 
 function App() {
 
   const [playersData,setPlayersData] = useState([])
+  const [initialPlayersData,setInitialPlayersData] = useState<Settings>({players:[], balls:0})
+
   const handleDataUpadate = (data:[])=>{
     setPlayersData(data)
-    console.log(data)
   }
-
+  const handleInitialDataUpadate = (data:Settings)=>{
+    setInitialPlayersData(data)
+  }
   return (
-    <PlayersContext.Provider value={{playersData: playersData, updatePlayersData: handleDataUpadate}} >
+    <PlayersContext.Provider value={{playersData: playersData, updatePlayersData: handleDataUpadate, initialPlayersData: initialPlayersData, updateInitialPlayersData: handleInitialDataUpadate}} >
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home/>}  />
-          <Route path='/new' element={<GameSettings updatePlayers={handleDataUpadate}/>}  />
+          <Route path='/new' element={<GameSettings/>}  />
           <Route path='/game' element={<Game/>}  />
         </Routes>
       </BrowserRouter>

@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import { Card } from '../components/Card';
 import { Center } from '../components/Center';
 import { Dropdown } from '../components/Dropdown';
@@ -8,11 +8,10 @@ import { Text } from '../components/Text';
 import { StartButton } from '../components/Button';
 import { createPlayers, formValidation } from '../logic';
 import { Navigate } from 'react-router-dom';
+import { PlayersContext } from '../App';
 
-interface Props{
-  updatePlayers: Function;
-}
-function GameSettings({ updatePlayers }:Props) {
+function GameSettings() {
+  const playerCtx = useContext(PlayersContext);
   const [numOfPlayers, setNumOfPlayers] = useState<number>(2);
   const [numOfBalls, setNumOfBalls] = useState<number>(1);
   const [settingSaved, setSettingSaved] = useState(false);
@@ -23,7 +22,8 @@ function GameSettings({ updatePlayers }:Props) {
     const valid = formValidation(e.currentTarget.elements);
     if (valid){
       const players = createPlayers(e.currentTarget.elements, numOfBalls);
-      updatePlayers(players)
+      playerCtx.updatePlayersData(players)
+      playerCtx.updateInitialPlayersData({players: [...players], balls: numOfBalls})
       setSettingSaved(true);
     }else{
       setValidForm(false);
