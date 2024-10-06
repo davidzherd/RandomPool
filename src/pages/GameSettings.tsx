@@ -32,7 +32,7 @@ function GameSettings() {
 
   return (
     <>
-    {settingSaved && <Navigate to={'/game'}/>}
+    {settingSaved && <Navigate to={'/RandomPool/game'}/>}
       <form onSubmit={submitDetails}>
         <Center direction='column'>
           <Logo />

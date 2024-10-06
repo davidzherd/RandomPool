@@ -40,7 +40,7 @@ export const WinnerPopUp = ({ bottom, action }:Props) =>{
                     </PlayerTag>
                     <Center direction="column" margin="5rem 0 0 0">
                         <Button margin="5rem 0" padding="1rem 2rem" btncolor="#DAA520" fill onClick={handleNewRound}>START NEW ROUND</Button>
-                        <Link to="/new">
+                        <Link to="/RandomPool/new">
                             <Button btncolor="gray" txtcolor="gray">GAME SETTINGS</Button>
                         </Link>
                     </Center>
