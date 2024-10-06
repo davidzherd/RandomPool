@@ -33,9 +33,9 @@ function App() {
     <PlayersContext.Provider value={{playersData: playersData, updatePlayersData: handleDataUpadate, initialPlayersData: initialPlayersData, updateInitialPlayersData: handleInitialDataUpadate}} >
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Home/>}  />
-          <Route path='/new' element={<GameSettings/>}  />
-          <Route path='/game' element={<Game/>}  />
+          <Route path='/randompool/' element={<Home/>}  />
+          <Route path='/randompool/new' element={<GameSettings/>}  />
+          <Route path='/randompool/game' element={<Game/>}  />
         </Routes>
       </BrowserRouter>
     </PlayersContext.Provider>
